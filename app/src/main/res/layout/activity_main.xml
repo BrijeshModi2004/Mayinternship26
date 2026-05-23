@@ -49,7 +49,6 @@
 
     <Button
         style="@style/button_20"
-        app:backgroundTint="NULL"
         android:text="Sign in"
         />
 
