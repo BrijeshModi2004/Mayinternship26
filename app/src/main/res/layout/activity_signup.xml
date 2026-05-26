@@ -47,15 +47,18 @@
             style="@style/edit_15"
             android:layout_marginTop="20dp"
             android:hint="Password"
+            android:inputType="textPassword"
             />
 
         <EditText
             style="@style/edit_15"
             android:layout_marginTop="20dp"
             android:hint="ConfirmPassword"
+            android:inputType="textPassword"
             />
 
         <TextView
+            android:id="@+id/already_account"
             style="@style/text_18"
             android:layout_marginTop="50dp"
             android:gravity="center"
@@ -63,6 +66,7 @@
             />
 
         <Button
+            android:id="@+id/button_sign_up"
             style="@style/button_20"
             android:text="Sign up"
             />
