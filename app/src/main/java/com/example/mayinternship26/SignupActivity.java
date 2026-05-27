@@ -21,6 +21,8 @@ public class SignupActivity extends AppCompatActivity {
     EditText name, email, contact, password, cnf_password;
     String EmailPattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
+    String Password_Pattern = "^(?=.*\\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&*]{6,20}$";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,9 @@ public class SignupActivity extends AppCompatActivity {
                  else if (password.getText().toString().equals("")){
                      password.setError("Password is Required");
                  }
-
+                 else if (!password.getText().toString().matches(Password_Pattern)) {
+                     email.setError("Password Not Valid");
+                 }
                  else if (password.getText().toString().length()<8) {
                      password.setError("Minimum 8 Characters Required");
                  }
