@@ -64,19 +64,15 @@ public class MainActivity extends AppCompatActivity {
                 if(login_email.getText().toString().trim().equals("")){
                     login_email.setError("Email Required");
                 }
-
-                else if (login_email.getText().toString().matches(emailPattern)) {
+                else if(!login_email.getText().toString().matches(emailPattern)) {
                     login_email.setError("Invalid Email Address");
                 }
-
-                else if (login_password.getText().toString().trim().equals("")){
+                else if(login_password.getText().toString().trim().equals("")) {
                     login_password.setError("Password Required");
                 }
-
-                else if(login_password.getText().toString().trim().length()<8){
+                else if(login_password.getText().toString().trim().length()<8) {
                     login_password.setError("Minimum 8 Character Required");
                 }
-
                 else {
                     Toast.makeText(MainActivity.this, "Login Succesfully", Toast.LENGTH_SHORT).show();
                 }

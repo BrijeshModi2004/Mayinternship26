@@ -19,7 +19,7 @@ public class SignupActivity extends AppCompatActivity {
     TextView already_account;
     Button button_sign_up;
     EditText name, email, contact, password, cnf_password;
-    String EmailPattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+    String EmailPattern ="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
     String Password_Pattern = "^(?=.*\\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&*]{6,20}$";
 
@@ -32,6 +32,7 @@ public class SignupActivity extends AppCompatActivity {
 
         already_account = findViewById(R.id.already_account);
         button_sign_up = findViewById(R.id.button_sign_up);
+
         name = findViewById(R.id.signup_name);
         email = findViewById(R.id.signup_email);
         contact = findViewById(R.id.signup_contact);
@@ -51,41 +52,42 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                 if (name.getText().toString().equals("")){
+                 if(name.getText().toString().equals("")){
                      name.setError("Name is Required");
                  }
                  
                  else if(email.getText().toString().equals("")){
                      email.setError("Email is Required");
                  }
-                 
-                 else if (!email.getText().toString().matches(EmailPattern)) {
+
+                 else if(!email.getText().toString().matches(EmailPattern)){
                      email.setError("Email Not Valid");
                  }
-                 
-                 else if (contact.getText().toString().equals("")) {
+
+                 else if(contact.getText().toString().equals("")){
                      contact.setError("Contact is Required");
                  }
 
-                 else if (contact.getText().toString().length()<10) {
+                 else if(contact.getText().toString().length()<10) {
                      contact.setError("Invalid Contact Number");
                  }
 
-                 else if (password.getText().toString().equals("")){
+                 else if(password.getText().toString().equals("")){
                      password.setError("Password is Required");
                  }
-                 else if (!password.getText().toString().matches(Password_Pattern)) {
-                     email.setError("Password Not Valid");
-                 }
-                 else if (password.getText().toString().length()<8) {
+
+                 else if(!password.getText().toString().matches(Password_Pattern)){
+                     password.setError("Password Not Valid");
+
+                 else if(password.getText().toString().length()<8) {
                      password.setError("Minimum 8 Characters Required");
                  }
 
-                 else if (cnf_password.getText().toString().equals("")){
+                 else if(cnf_password.getText().toString().equals("")){
                      cnf_password.setError("Confirm Password is Required");
                  }
 
-                 else if (!cnf_password.getText().toString().matches(password.getText().toString())) {
+                 else if(!cnf_password.getText().toString().matches(password.getText().toString())) {
                      cnf_password.setError("Password does not matches");
                  }
 
