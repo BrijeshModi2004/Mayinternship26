@@ -1,6 +1,8 @@
 package com.example.mayinternship26;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,11 +28,17 @@ public class MainActivity extends AppCompatActivity {
     String emailPattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
     EditText login_email, login_password;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = openOrCreateDatabase("Mayinternship26",MODE_PRIVATE,null);
+        String userTable = "CREATE TABLE IF NOT EXISTS user(userid INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " name VARCHAR(50), email VARCHAR(100) ,contact VARCHAR(10), password VARCHAR(20))";
+        db.execSQL(userTable);
 
         create_new_account = findViewById(R.id.create_new_account);
         forget_password = findViewById(R.id.forget_password);
@@ -74,15 +82,30 @@ public class MainActivity extends AppCompatActivity {
                     login_password.setError("Minimum 8 Character Required");
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "Login Succesfully", Toast.LENGTH_SHORT).show();
+
+                    String checkUser = "SELECT * FROM user WHERE email= '"+login_email.getText().toString()+"'  AND  password= '"+login_password.getText().toString()+"'";
+             //       db.execSQL(checkUser);
+
+                    Cursor cursor= db.rawQuery(checkUser, null);
+
+                    if(cursor.getCount()>0){
+                        Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+
                 }
 
                 //toast(Short and Long Duration message) type of mess
-                //Toast.makeText(MainActivity.this, "Login Succesfully", Toast.LENGTH_LONG).show();
-                //Toast.makeText(MainActivity.this, "Login Succesfully", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 
-                //Snackbar(Short and Long messaqge) tupe of mess
-                //Snackbar.make(view,"Login Succesfully!!",Snackbar.LENGTH_SHORT).show();
+                //Snackbar(Short and Long message) type of mess
+                //Snackbar.make(view,"Login Successfully!!",Snackbar.LENGTH_SHORT).show();
             }
         });
     }

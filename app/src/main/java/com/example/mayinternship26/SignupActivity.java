@@ -1,6 +1,7 @@
 package com.example.mayinternship26;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,11 +24,18 @@ public class SignupActivity extends AppCompatActivity {
 
     String Password_Pattern = "^(?=.*\\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&*]{6,20}$";
 
+    SQLiteDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        db = openOrCreateDatabase("Mayinternship26",MODE_PRIVATE,null);
+        String userTable = "CREATE TABLE IF NOT EXISTS user(userid INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " name VARCHAR(50), email VARCHAR(100) ,contact VARCHAR(10), password VARCHAR(20))";
+        db.execSQL(userTable);
 
 
         already_account = findViewById(R.id.already_account);
@@ -76,8 +84,9 @@ public class SignupActivity extends AppCompatActivity {
                      password.setError("Password is Required");
                  }
 
-                 else if(!password.getText().toString().matches(Password_Pattern)){
+                 else if(!password.getText().toString().matches(Password_Pattern)) {
                      password.setError("Password Not Valid");
+                 }
 
                  else if(password.getText().toString().length()<8) {
                      password.setError("Minimum 8 Characters Required");
@@ -92,6 +101,14 @@ public class SignupActivity extends AppCompatActivity {
                  }
 
                  else {
+
+                     String inserUser = "INSERT INTO user VALUES (null, '"+name.getText().toString()+"' ," +
+                             " '"+email.getText().toString()+"' , '"+contact.getText().toString()+"' ," +
+                             " '"+password.getText().toString()+"' )";
+                     db.execSQL(inserUser);
+
+
+
                      Toast.makeText(SignupActivity.this, "User Registered Succesfully!!", Toast.LENGTH_SHORT).show();
                  }
             }
