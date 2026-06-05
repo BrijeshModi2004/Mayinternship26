@@ -1,6 +1,7 @@
 package com.example.mayinternship26;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -30,15 +31,19 @@ public class MainActivity extends AppCompatActivity {
     EditText login_email, login_password;
     SQLiteDatabase db;
 
+    SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = openOrCreateDatabase("Mayinternship26",MODE_PRIVATE,null);
+        db = openOrCreateDatabase("MayInternship26.db",MODE_PRIVATE,null);
         String userTable = "CREATE TABLE IF NOT EXISTS user(userid INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " name VARCHAR(50), email VARCHAR(100) ,contact VARCHAR(10), password VARCHAR(20))";
         db.execSQL(userTable);
+
+        sp = getSharedPreferences("MayInternship26", MODE_PRIVATE);
 
         create_new_account = findViewById(R.id.create_new_account);
         forget_password = findViewById(R.id.forget_password);
@@ -46,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
-
 
 
         create_new_account.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
                     if(cursor.getCount()>0){
                         Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+                        startActivity(intent);
+
+                        sp.edit().putString("email",login_email.getText().toString()).commit();
                     }
                     else {
                         Toast.makeText(MainActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
