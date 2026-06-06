@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,7 +17,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    Button delete , logout;
+    Button delete , logout , profile ;
+    TextView welcome;
 
     String email;
     SharedPreferences sp;
@@ -33,17 +35,23 @@ public class DashboardActivity extends AppCompatActivity {
                 " name VARCHAR(50), email VARCHAR(100) ,contact VARCHAR(10), password VARCHAR(20))";
         db.execSQL(userTable);
 
-        sp = getSharedPreferences("MayInternship26",MODE_PRIVATE);
+        sp = getSharedPreferences(ConstantSp.pref,MODE_PRIVATE);
 
-        email = sp.getString("email","");
+        email = sp.getString(ConstantSp.email,"");
 
         delete = findViewById(R.id.dashboard_delete);
         logout = findViewById(R.id.dashboard_logout);
+        welcome = findViewById(R.id.dashboard_welcome);
+        profile = findViewById(R.id.dashboard_profile);
+
+        welcome.setText("Welcome "+sp.getString(ConstantSp.name,""));
 
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sp.edit().clear().commit();
+
                 Intent intent = new Intent(DashboardActivity.this,MainActivity.class);
                 startActivity(intent);
 
@@ -57,12 +65,21 @@ public class DashboardActivity extends AppCompatActivity {
                 String deleteUser = "DELETE FROM user WHERE email='"+email+"'";
                 db.execSQL(deleteUser);
 
+                sp.edit().clear().commit();
+
                 Toast.makeText(DashboardActivity.this,"Profile Deleted",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(DashboardActivity.this,MainActivity.class);
                 startActivity(intent);
             }
         });
 
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DashboardActivity.this,ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
