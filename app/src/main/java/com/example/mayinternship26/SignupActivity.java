@@ -20,6 +20,7 @@ public class SignupActivity extends AppCompatActivity {
     TextView already_account;
     Button button_sign_up;
     EditText name, email, contact, password, cnf_password;
+
     String EmailPattern ="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
     String Password_Pattern = "^(?=.*\\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&*]{6,20}$";

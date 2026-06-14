@@ -15,27 +15,27 @@
         <TextView
             style="@style/text_30"
             android:text="Create Account"
-            android:layout_marginTop="90dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginTop="@dimen/_90sdp"
+            android:layout_marginBottom="@dimen/_40sdp"
             />
 
         <TextView
             style="@style/text_20"
-            android:textSize="18dp"
+            android:textSize="@dimen/_18sdp"
             android:text="Create an account so you can explore all the\n existing jobs"
             />
 
         <EditText
             android:id="@+id/signup_name"
             style="@style/edit_15"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="@dimen/_60sdp"
             android:hint="Name"
             />
 
         <EditText
             android:id="@+id/signup_email"
             style="@style/edit_15"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:hint="Email"
             android:inputType="textEmailAddress"
             />
@@ -43,7 +43,7 @@
         <EditText
             android:id="@+id/signup_contact"
             style="@style/edit_15"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:hint="Contact"
             android:inputType="phone"
             android:maxLength="10"
@@ -52,7 +52,7 @@
         <EditText
             android:id="@+id/signup_password"
             style="@style/edit_15"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:hint="Password"
             android:inputType="textPassword"
             />
@@ -60,7 +60,7 @@
         <EditText
             android:id="@+id/signup_confirm_password"
             style="@style/edit_15"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:hint="ConfirmPassword"
             android:inputType="textPassword"
             />
@@ -68,7 +68,7 @@
         <TextView
             android:id="@+id/already_account"
             style="@style/text_18"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="@dimen/_50sdp"
             android:gravity="center"
             android:text="Already have an Account"
             />
