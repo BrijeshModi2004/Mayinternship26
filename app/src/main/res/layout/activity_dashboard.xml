@@ -7,35 +7,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DashboardActivity">
-    
+
     <TextView
         android:id="@+id/dashboard_welcome"
         style="@style/text_30"
-        android:text="Welcome User"
         android:layout_marginTop="@dimen/_90sdp"
         android:layout_marginBottom="40dp"
-        />
+        android:text="Welcome User" />
 
     <Button
         android:id="@+id/dashboard_delete"
         style="@style/button_20"
         android:text="Delete Profile"
-        app:backgroundTint="@null"
-        />
+        app:backgroundTint="@null" />
 
     <Button
         android:id="@+id/dashboard_logout"
         style="@style/button_20"
         android:text="Logout"
-        app:backgroundTint="@null"
-        />
+        app:backgroundTint="@null" />
 
     <Button
         android:id="@+id/dashboard_profile"
         style="@style/button_20"
         android:text="Profile"
-        app:backgroundTint="@null"
-        />
+        app:backgroundTint="@null" />
+
+    <Button
+        android:id="@+id/dashboard_category"
+        style="@style/button_20"
+        android:text="Category"
+        app:backgroundTint="@null" />
 
 
 </LinearLayout>
