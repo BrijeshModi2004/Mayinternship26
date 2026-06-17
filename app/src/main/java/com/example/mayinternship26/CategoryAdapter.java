@@ -1,11 +1,16 @@
 package com.example.mayinternship26;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,11 +21,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
     String[] nameArray;
     int[] imageArray;
 
+    SharedPreferences sp;
+
     public CategoryAdapter(Context context, int[] idArray, String[] nameArray, int[] imageArray) {
         this.context = context;
         this.idArray = idArray;
         this.nameArray = nameArray;
         this.imageArray = imageArray;
+
+        sp = context.getSharedPreferences(ConstantSp.pref,MODE_PRIVATE);
     }
 
     @NonNull
@@ -45,6 +54,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
     public void onBindViewHolder(@NonNull CategoryAdapter.MyHolder holder, int position) {
         holder.name.setText(nameArray[position]);
         holder.image.setImageResource(imageArray[position]);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+  //              Toast.makeText(context,"You clicked on"+nameArray[position],Toast.LENGTH_SHORT).show();
+
+                sp.edit().putString(ConstantSp.categoryId,String.valueOf(idArray[position])).commit();
+
+                Intent intent = new Intent(context,SubCategoryActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
