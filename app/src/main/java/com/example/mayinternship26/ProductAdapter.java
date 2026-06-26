@@ -3,6 +3,7 @@ package com.example.mayinternship26;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.media.Image;
@@ -62,6 +63,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyHolder
         holder.discountedPrice.setText(ConstantSp.symbol+arrayList.get(position).getDiscountedPrice());
 
         holder.originalPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sp.edit().putString(ConstantSp.productId, String.valueOf(arrayList.get(position).getProductid())).commit();
+                sp.edit().putString(ConstantSp.productName,arrayList.get(position).getName()).commit();
+                sp.edit().putInt(ConstantSp.productImage,arrayList.get(position).getImage()).commit();
+                sp.edit().putInt(ConstantSp.productOriginalPrice,arrayList.get(position).getOriginalPrice()).commit();
+                sp.edit().putInt(ConstantSp.productDiscountedPrice,arrayList.get(position).getDiscountedPrice()).commit();
+                sp.edit().putString(ConstantSp.productDescription,arrayList.get(position).getDescription()).commit();
+
+
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 
