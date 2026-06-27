@@ -4,13 +4,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,21 +13,21 @@ import java.util.ArrayList;
 
 public class ProductActivity extends AppCompatActivity {
 
-    int[] productIdArray = {1,2,3,4,5,6,7,8,9};
-    int[] subIdArray = {1,1,1,2,2,2,3,3,3};
-    String[] nameArray = {"Iphone Headphone","Sony Headphone","Boat Headphone",
-                          "Iphone","Samsung","Google",
-                          "Iphone Earbuds","Boat Earbuds","Sony Earbuds"};
+    int[] productIdArray = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int[] subIdArray = {1, 1, 1, 2, 2, 2, 3, 3, 3};
+    String[] nameArray = {"Iphone Headphone", "Sony Headphone", "Boat Headphone",
+            "Iphone", "Samsung", "Google",
+            "Iphone Earbuds", "Boat Earbuds", "Sony Earbuds"};
 
-    int[] imageArray = {R.drawable.iphoneheadphone,R.drawable.sonyheadphone,R.drawable.boatheadphone,
-                        R.drawable.iphone,R.drawable.samsung,R.drawable.google,
-                        R.drawable.iphoneearbuds,R.drawable.boatearbuds,R.drawable.sonyearbuds};
+    int[] imageArray = {R.drawable.iphoneheadphone, R.drawable.sonyheadphone, R.drawable.boatheadphone,
+            R.drawable.iphone, R.drawable.samsung, R.drawable.google,
+            R.drawable.iphoneearbuds, R.drawable.boatearbuds, R.drawable.sonyearbuds};
 
-    int[] originalPrice = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
-    int[] discountedPrice = {900,1900,2900,3900,4900,5900,6900,7900,8900};
-    String[] prodDescription = {"Iphone Headphone Desc","Sony Headphone Desc","Boat Headphone Desc",
-            "Iphone Desc","Samsung Desc","Google Desc",
-            "Iphone Earbuds Desc","Boat Earbuds Desc","Sony Earbuds Desc"};
+    int[] originalPrice = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000};
+    int[] discountedPrice = {900, 1900, 2900, 3900, 4900, 5900, 6900, 7900, 8900};
+    String[] prodDescription = {"Iphone Headphone Desc", "Sony Headphone Desc", "Boat Headphone Desc",
+            "Iphone Desc", "Samsung Desc", "Google Desc",
+            "Iphone Earbuds Desc", "Boat Earbuds Desc", "Sony Earbuds Desc"};
 
     ArrayList<ProductList> arrayList;
     SQLiteDatabase db;
@@ -67,36 +62,36 @@ public class ProductActivity extends AppCompatActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         for (int i = 0; i < subIdArray.length; i++) {
-            String checkProduct = "SELECT * FROM product WHERE name = '" + nameArray[i] + "' AND subcategoryid = '"+subIdArray[i]+"' ";
-            Cursor cursor = db.rawQuery(checkProduct, null);
-            if (cursor.getCount() == 0) {
-                String insertProduct = "INSERT INTO product VALUES(null, '" + subIdArray[i] + "','" + nameArray[i] + "'," +
-                        "'" + imageArray[i] + "', '"+originalPrice[i]+"','"+discountedPrice[i]+"','"+prodDescription[i]+"')";
-                db.execSQL(insertProduct);
+            String checkProduct = "SELECT * FROM product WHERE name = '" + nameArray[i] + "' AND subcategoryid = '" + subIdArray[i] + "' ";
+            try (Cursor cursor = db.rawQuery(checkProduct, null)) {
+                if (cursor.getCount() == 0) {
+                    String insertProduct = "INSERT INTO product VALUES(null, '" + subIdArray[i] + "','" + nameArray[i] + "'," +
+                            "'" + imageArray[i] + "', '" + originalPrice[i] + "','" + discountedPrice[i] + "','" + prodDescription[i] + "')";
+                    db.execSQL(insertProduct);
+                }
             }
         }
 
-        String getProduct = "SELECT * FROM product WHERE subcategoryid = '"+sp.getString(ConstantSp.subcategoryId,"")+"'";
-        Cursor cursor = db.rawQuery(getProduct, null);
-        arrayList = new ArrayList<>();
-        if (cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                ProductList list = new ProductList();
-                list.setProductid(cursor.getInt(0));
-                list.setSubId(cursor.getInt(1));
-                list.setName(cursor.getString(2));
-                list.setImage(cursor.getInt(3));
-                list.setOriginalPrice(cursor.getInt(4));
-                list.setDiscountedPrice(cursor.getInt(5));
-                list.setDescription(cursor.getString(6));
+        String getProduct = "SELECT * FROM product WHERE subcategoryid = '" + sp.getString(ConstantSp.subcategoryId, "") + "'";
+        try (Cursor cursor = db.rawQuery(getProduct, null)) {
+            arrayList = new ArrayList<>();
+            if (cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    ProductList list = new ProductList();
+                    list.setProductid(cursor.getInt(0));
+                    list.setSubId(cursor.getInt(1));
+                    list.setName(cursor.getString(2));
+                    list.setImage(cursor.getInt(3));
+                    list.setOriginalPrice(cursor.getInt(4));
+                    list.setDiscountedPrice(cursor.getInt(5));
+                    list.setDescription(cursor.getString(6));
 
-                arrayList.add(list);
+                    arrayList.add(list);
+                }
 
+                ProductAdapter adapter = new ProductAdapter(ProductActivity.this, arrayList);
+                recycler.setAdapter(adapter);
             }
-
-            ProductAdapter adapter = new ProductAdapter(ProductActivity.this, arrayList);
-            recycler.setAdapter(adapter);
         }
-
     }
 }

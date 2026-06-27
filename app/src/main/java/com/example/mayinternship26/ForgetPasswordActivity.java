@@ -68,22 +68,19 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                     newCnfPassword.setError("Password does not matches");
                 }
 
-                else{
+                else {
+                    String checkUser = "SELECT * FROM user WHERE email = '" + email.getText().toString() + "'";
+                    try (Cursor cursor = db.rawQuery(checkUser, null)) {
+                        if (cursor.getCount() > 0) {
+                            String updateUser = "UPDATE user SET password = '" + newPassword.getText().toString() + "' WHERE email = '" + email.getText().toString() + "'";
+                            db.execSQL(updateUser);
 
-                    String checkUser = "SELECT * FROM user WHERE email = '"+email.getText().toString()+"'";
-                    Cursor cursor = db.rawQuery(checkUser,null);
-
-                     if(cursor.getCount()>0){
-                        String updateUser = "UPDATE user SET password = '"+newPassword.getText().toString()+"'WHERE email = '"+email.getText().toString()+"'";
-                        db.execSQL(updateUser);
-
-                        Toast.makeText(ForgetPasswordActivity.this, "Password Updated Successfully!!", Toast.LENGTH_SHORT).show();
-                        onBackPressed();
-                     }
-                     else {
-                        Toast.makeText(ForgetPasswordActivity.this,"Invalid Email Id",Toast.LENGTH_SHORT).show();
-                     }
-
+                            Toast.makeText(ForgetPasswordActivity.this, "Password Updated Successfully!!", Toast.LENGTH_SHORT).show();
+                            onBackPressed();
+                        } else {
+                            Toast.makeText(ForgetPasswordActivity.this, "Invalid Email Id", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
         });

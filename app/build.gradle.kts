@@ -4,16 +4,12 @@ plugins {
 
 android {
     namespace = "com.example.mayinternship26"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.mayinternship26"
         minSdk = 27
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -47,4 +43,6 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:5.0.5")
     implementation("com.intuit.sdp:sdp-android:1.1.1")
+
+    implementation("com.razorpay:checkout:1.6.41")
 }

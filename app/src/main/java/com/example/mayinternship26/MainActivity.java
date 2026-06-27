@@ -87,30 +87,23 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
 
-                    String checkUser = "SELECT * FROM user WHERE email= '"+login_email.getText().toString()+"'  AND  password= '"+login_password.getText().toString()+"'";
-             //       db.execSQL(checkUser);
+                    String checkUser = "SELECT * FROM user WHERE email= '" + login_email.getText().toString() + "'  AND  password= '" + login_password.getText().toString() + "'";
 
-                    Cursor cursor= db.rawQuery(checkUser, null);
-
-                    if(cursor.getCount()>0){
-
-                        while(cursor.moveToNext()){
-                            sp.edit().putString(ConstantSp.userid, String.valueOf(cursor.getInt(0))).commit();
-                            sp.edit().putString(ConstantSp.name,cursor.getString(1)).commit();
-                            sp.edit().putString(ConstantSp.email,cursor.getString(2)).commit();
-                            sp.edit().putString(ConstantSp.contact,cursor.getString(3)).commit();
-                            sp.edit().putString(ConstantSp.password,cursor.getString(4)).commit();
+                    try (Cursor cursor = db.rawQuery(checkUser, null)) {
+                        if (cursor.getCount() > 0) {
+                            while (cursor.moveToNext()) {
+                                sp.edit().putString(ConstantSp.userid, String.valueOf(cursor.getInt(0))).commit();
+                                sp.edit().putString(ConstantSp.name, cursor.getString(1)).commit();
+                                sp.edit().putString(ConstantSp.email, cursor.getString(2)).commit();
+                                sp.edit().putString(ConstantSp.contact, cursor.getString(3)).commit();
+                                sp.edit().putString(ConstantSp.password, cursor.getString(4)).commit();
+                            }
+                            Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
                         }
-
-
-                        Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
-                        startActivity(intent);
-
-                    }
-                    else {
-                        Toast.makeText(MainActivity.this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
                     }
 
 
